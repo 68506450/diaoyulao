@@ -71,7 +71,8 @@ class Index extends Controller{
                 unset($DB['database']);
                 $db  = Db::connect($DB);//Db::getInstance($DB);
                 $sql = "CREATE DATABASE IF NOT EXISTS `{$dbname}` DEFAULT CHARACTER SET utf8";
-                $db->execute($sql) || $this->error($db->getError());
+                // PDO reports 0 affected rows for DDL, which is not a failure.
+                $db->execute($sql);
 				session('step', 2);
             }
             //跳转到数据库安装页面
